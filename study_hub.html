@@ -1773,8 +1773,8 @@ function shuffleFC(){fcFiltered.sort(()=>Math.random()-.5);fcIdx=0;renderFC();}
 function filterQuiz(mode, btn){
   document.querySelectorAll('#pg-quiz .filter-bar .filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  if(mode==='random'){qFiltered=[...quizzes].sort(()=>Math.random()-.5).slice(0,10);}
-  else{qFiltered=[...quizzes];}
+  if(mode==='random'){qFiltered=[...quizzes].sort(()=>Math.random()-.5).slice(0,10).map(shuffleOpts);}
+  else{qFiltered=[...quizzes].map(shuffleOpts);}
   qIdx=0;qCorrect=0;qAnswered=0;renderQuiz();
 }
 function renderQuiz(){
@@ -1805,7 +1805,7 @@ function navQuiz(d){
   const nxt=qIdx+d;
   if(nxt>=0&&nxt<qFiltered.length){qIdx=nxt;renderQuiz();}
 }
-function restartQuiz(){qFiltered.sort(()=>Math.random()-.5);qIdx=0;qCorrect=0;qAnswered=0;renderQuiz();}
+function restartQuiz(){qFiltered=[...quizzes].sort(()=>Math.random()-.5).map(shuffleOpts);qIdx=0;qCorrect=0;qAnswered=0;renderQuiz();}
 
 // CHEAT SHEET
 function renderCheat(){
@@ -2360,14 +2360,22 @@ function renderTestPrep(){
       }).join('')}</div>
       <div class="quiz-explain ${answered?'show':''}">${q.explain}</div>
     </div>
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
       <button class="fc-btn prev" onclick="tpNav(-1)" ${tpIdx===0?'disabled':''}>← Previous</button>
       <button class="fc-btn next" onclick="tpNav(1)">${tpIdx===tpQuestions.length-1?'Finish Test →':'Next →'}</button>
+      <button class="fc-btn shuffle" onclick="resetTP()" style="margin-left:auto;background:rgba(255,101,132,.15);color:var(--accent2)">Restart Test</button>
     </div>`;
 }
 
+function shuffleOpts(q){
+  // Shuffle option positions so correct answer lands randomly
+  const indices=[0,1,2,3].sort(()=>Math.random()-.5);
+  return {q:q.q, opts:indices.map(i=>q.opts[i]), ans:indices.indexOf(q.ans), topic:q.topic, explain:q.explain};
+}
+
 function startTP(count){
-  tpQuestions=count>0?[...quizzes].sort(()=>Math.random()-.5).slice(0,count):[...quizzes].sort(()=>Math.random()-.5);
+  const pool=[...quizzes].sort(()=>Math.random()-.5);
+  tpQuestions=(count>0?pool.slice(0,count):pool).map(shuffleOpts);
   tpAnswers=new Array(tpQuestions.length).fill(undefined);
   tpIdx=0;tpStarted=true;
   tpSeconds=count===20?1200:count===35?1800:0;
@@ -2400,6 +2408,12 @@ function tpNav(d){
 }
 
 function tpGoTo(i){tpIdx=i;renderTestPrep();}
+
+function resetTP(){
+  if(tpTimer)clearInterval(tpTimer);
+  tpStarted=false;tpIdx=0;tpQuestions=[];tpAnswers=[];tpSeconds=0;
+  renderTestPrep();
+}
 
 function showTPResults(){
   if(tpTimer)clearInterval(tpTimer);
