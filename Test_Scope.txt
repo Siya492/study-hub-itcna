@@ -1,0 +1,27 @@
+GUIDE FOR TEST — What to Study (Directly from the Lecturer)
+
+1. Function of SSD Controller - Others
+2. Troubleshooting and Symptoms
+   a. Power supply -> Issues, symptoms and how to mitigate it
+   b. CPU
+   c. RAM
+   d. ROM
+   e. CMOS
+   f. GPU driver
+3. Network
+   a. Topology
+   b. Network Type (Different Network types: i.e WAN/LAN)
+   c. Network equipment (Function of network equipment i.e router/Switch/Hub)
+   d. MAC addresses (Which network element makes use of it and what for?)
+4. Thermal Paste & Cooling systems
+5. Thread & Multi-threading concepts
+6. Virtualization -> RAID & RAID levels
+7. Cache, SRAM, DRAM
+8. Network components — Primary purpose
+9. Network cabling: Fiber, Coaxial etc. (Length, Quality, Characteristics)
+10. NIC — Network Interface Card
+11. Telnet / Ping / Netstat etc.
+12. SOHO — Small Office Home Office
+13. Motherboard standoff and the role, use cases
+14. WiFi & Versions (i.e WiFi 5, 6 etc.)
+15. Concepts of drivers

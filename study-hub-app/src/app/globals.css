@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/*
+ * Global styles for the ITCNA1-12 Study Hub.
+ * Tailwind v4 uses CSS-first configuration — custom tokens can be
+ * added here with @theme if needed.
+ */
+
+@theme {
+  --color-bg: #0f0f1a;
+  --color-bg-secondary: #1a1a2e;
+  --color-accent: #6c63ff;
+  --color-accent-pink: #ff6584;
+  --color-accent-green: #43e97b;
+  --color-accent-yellow: #f9d423;
+  --color-foreground: #e8e8f0;
+  --color-foreground-muted: #a0a0b8;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Default selection colour */
+::selection {
+  background-color: rgba(108, 99, 255, 0.3);
+}

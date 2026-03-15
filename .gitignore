@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+.next/
+
+# Environment
+.env.local
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Large files (textbook PDF)
+*.pdf

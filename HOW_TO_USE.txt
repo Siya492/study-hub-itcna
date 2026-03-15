@@ -1,0 +1,139 @@
+=============================================
+  ITCNA1-12 STUDY HUB — How to Use
+=============================================
+
+Hey! This study tool was built for the ITCNA1-12 Computer Network and Security module.
+It covers all 19 test topics with explanations, quizzes, flashcards, and more.
+Everything runs from ONE file — no internet or installation needed.
+
+
+GETTING STARTED
+---------------
+1. Open the file "study_hub.html" in any browser (Chrome, Edge, Firefox)
+2. That's it — you're ready to study
+
+
+THE 9 TABS (top navigation bar)
+--------------------------------
+
+1. DASHBOARD
+   - Your home screen
+   - Shows all 19 test topics as cards
+   - Progress panel at the top shows your mastery level per topic
+   - Filter by Week 1, 2, 3 or 4
+   - Click any topic card to start studying
+   - Green border + checkmark = you've marked it as studied
+   - Scroll down for: Revision section + Focus Areas (weak topics)
+
+2. STUDY
+   - The main study page for each topic
+   - Three explanation tabs:
+     * Textbook — formal definition
+     * Lecturer — how the lecturer explained it in class
+     * Real Life — simple everyday analogy you can relate to
+   - Key Facts to Memorize — bullet points of the most important stuff
+   - See It section — YouTube and Google Image links to actually SEE the hardware/concept
+   - Some topics have built-in diagrams (motherboard layout, RAID levels, memory pyramid, network topologies)
+   - "Mark as Studied" button at the bottom to track your progress
+   - "Jump to" buttons let you hop between topics in the same week
+
+3. ACRONYMS
+   - Searchable dictionary of 80+ acronyms from the course
+   - Every acronym has: abbreviation, full name, and what it actually means
+   - Filter by category: components, network, protocols, security
+   - Use the search bar to find any acronym instantly
+
+4. FLASHCARDS
+   - Flip cards for memorization
+   - Click the card (or press SPACEBAR) to flip and see the answer
+   - Arrow keys (LEFT/RIGHT) to navigate between cards
+   - Filter by category: Components, Network, Security, Protocols, Troubleshoot
+   - Shuffle button to randomize the order
+
+5. QUIZ
+   - 47 multiple choice questions covering all test topics
+   - Pick an answer, see if you're right, read the explanation
+   - "Random 10" mode for a quick test
+   - Arrow keys to move between questions
+
+6. CHEAT SHEET
+   - Compact visual reference tables for last-minute revision
+   - Covers: Protocols & Ports, RAID Levels, Network Types, Network Equipment,
+     Troubleshooting, OSI Model, IP Addressing, Cabling, Network Tools,
+     Security Concepts, Thermal Paste, Cache/Memory, WiFi Versions
+
+7. EXAM TRAPS
+   - 17 pairs of commonly confused concepts that exam writers use as wrong answer traps
+   - Each card shows both concepts side-by-side with the key difference
+   - Example exam question showing the TRAP answer vs the CORRECT answer
+   - Searchable and filterable by category (components, network, protocols)
+   - Study this BEFORE taking the quiz or test prep — it prevents easy mistakes
+
+9. THE JOURNEY
+   - Interactive visual map showing how ALL 19 topics connect
+   - 5 layers: The Machine → The Translator → The Door → The Network → Tools & Protection
+   - Each layer has a real-life analogy explaining why it exists
+   - Click any topic node to jump straight to studying it
+   - Progress bar tracks how much of the journey you've explored
+   - "The Big Picture" summary at the bottom ties everything together
+   - This is the KEY to understanding — not just memorizing, but SEEING how it all connects
+
+10. TEST PREP
+   - Exam simulator that mimics a real test environment
+   - Three modes:
+     * Quick Test — 20 questions, 20 minute timer
+     * Standard Test — 35 questions, 30 minute timer
+     * Full Test — all questions, no timer
+   - Question map at the top shows your progress
+   - Results screen shows: pass/fail, score by topic, review of wrong answers
+
+
+REVISION SECTION (on Dashboard, scroll down)
+---------------------------------------------
+- Only appears once you've marked topics as studied
+- Shows condensed key facts for each studied topic (click to expand/collapse)
+- "Flashcards" button — launches flashcards ONLY from your studied topics
+- "Quick Quiz" button — popup quiz ONLY from your studied topics
+
+
+FOCUS AREAS (on Dashboard, below Revision)
+-------------------------------------------
+- Tracks every question you get wrong across ALL quizzes
+- Shows your weakest topics sorted worst-first with accuracy bars
+- For each weak topic you can:
+  * "Study" — jump straight to the full study page
+  * "Retry" — quiz yourself on just that topic
+  * "Details" — see the exact questions you got wrong and the correct answers
+- "Quiz Weak Areas Only" — tests you on ALL your weak topics at once
+- "Clear History" — resets the tracker for a fresh start
+
+
+PROGRESS TRACKING
+-----------------
+- Your progress is saved automatically in your browser
+- It persists between sessions (close and reopen — your data is still there)
+- Each person who uses the file gets their own independent progress
+- Progress is stored locally on YOUR computer — not shared with anyone
+
+
+TIPS FOR STUDYING
+-----------------
+- Start with the Study tab — read all three explanation types for each topic
+- Use the "See It" links to watch YouTube videos and see Google Images of real hardware
+- Test yourself with Flashcards after reading
+- Take the Quiz to check your understanding
+- Check the Dashboard to see which topics are red/yellow and focus on those
+- Open "The Journey" to see how ALL topics connect — this builds real understanding
+- Use the Cheat Sheet for last-minute revision before the test
+- Do a full Test Prep run to simulate the real exam
+
+
+KEYBOARD SHORTCUTS
+------------------
+- LEFT/RIGHT arrow keys — navigate flashcards and quiz questions
+- SPACEBAR — flip flashcard
+
+
+=============================================
+Good luck with the test!
+=============================================

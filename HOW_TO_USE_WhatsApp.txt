@@ -1,0 +1,54 @@
+📚 *ITCNA1-12 STUDY HUB*
+========================
+
+Hey! 👋 Here's the study tool for our Computer Network & Security module. Everything you need is in ONE file.
+
+📱 *HOW TO OPEN:*
+1️⃣ Save the file "study_hub.html" to your phone or PC
+2️⃣ Open it in Chrome, Edge or Firefox
+3️⃣ That's it - no internet needed! ✅
+
+🗂️ *WHAT'S INSIDE:*
+
+🏠 *DASHBOARD* - Your home screen. See all 19 topics, track what you've studied, see your weak areas.
+
+📖 *STUDY* - Click any topic to learn. Each one has 3 views:
+   📕 Textbook = formal definition
+   🎓 Lecturer = how it was explained in class
+   💡 Real Life = simple everyday example
+
+🔤 *ACRONYMS* - Search 80+ acronyms (NIC, MAC, RAID, DHCP etc). Each one tells you what it stands for and what it means.
+
+🃏 *FLASHCARDS* - Flip cards to test your memory. Click to flip, swipe to move. Filter by category.
+
+❓ *QUIZ* - 47 multiple choice questions. See if you got it right + read the explanation.
+
+📋 *CHEAT SHEET* - Quick reference tables for last-minute cramming before the test.
+
+⚠️ *EXAM TRAPS* - 17 commonly confused concepts exam writers use to trick you. Side-by-side cards showing e.g. "PSU vs Motherboard" with the trap answer vs correct answer. Study this before the test!
+
+🗺️ *THE JOURNEY* - See how ALL 19 topics connect in 5 layers. From building the machine → connecting to the network → protecting it all. Click any topic to jump straight to it. This is the KEY to truly understanding the module.
+
+🎯 *TEST PREP* - Simulate a real test:
+   ⚡ Quick = 20 questions, 20 mins
+   📝 Standard = 35 questions, 30 mins
+   📄 Full = all questions, no timer
+
+🔁 *REVISION* - After studying topics, scroll down on Dashboard for:
+   ✨ Key facts summary of what you studied
+   🧠 Quick quiz on ONLY your studied topics
+   🔴 Focus Areas showing your weak spots
+
+💪 *TIPS:*
+▶️ Start with Study mode - read all 3 explanations
+🎥 Use "See It" links to watch YouTube videos of the actual hardware
+🃏 Test yourself with Flashcards
+❓ Take the Quiz
+📊 Check Dashboard to see red/yellow topics and focus there
+⚠️ Go through "Exam Traps" to avoid common trick questions
+🗺️ Open "The Journey" to see how everything connects - builds real understanding
+🎯 Do a full Test Prep run before the real test
+
+💾 Your progress saves automatically in your browser.
+
+🔥 Good luck! Let's pass this thing! 🔥
