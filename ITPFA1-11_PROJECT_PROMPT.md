@@ -34,13 +34,37 @@ Build a single, self-contained `study_hub_itpfa.html` file (no internet needed, 
 8. **The Journey** — visual map showing how ALL topics connect in layers
 9. **Test Prep** — exam simulator with timer (Quick 20 / Standard 35 / Full)
 
-### Design:
+### Design & UX Requirements:
 - Dark theme (bg: #0f0f1a, accent: #6c63ff, green: #43e97b, red: #ff6584, yellow: #f9d423)
 - Responsive for phone + desktop
 - Progress saved in localStorage
 - Week filter buttons on dashboard
-- "Back to Week X" navigation when inside a topic
+- "Back to Week X" navigation when inside a topic (remembers which week filter was active)
+- "Jump to" buttons for other topics in the same week when studying a topic
 - Comparison tables inside study topics where natural comparisons exist
+- Study tab shows a landing page with all topic buttons when no topic is selected (not a blank page)
+- Quiz and Test Prep options must have **shuffled answer positions** every time (avoid answer bias like always being B)
+- High contrast text on all quiz/flashcard options — white text on dark backgrounds, clearly readable
+- All quiz options: `color:#fff; font-size:15px; font-weight:500; border:1.5px solid rgba(255,255,255,.18)`
+
+### Dashboard Features:
+- **Progress panel** at top: ring chart showing overall %, stats (studied, quiz accuracy, weak areas)
+- **Mastery grid**: every topic as a colored dot (green=strong, yellow=needs work, red=weak, grey=not studied)
+- **Revision section** (appears after marking topics as studied):
+  - Condensed key facts per studied topic (expandable/collapsible)
+  - "Quick Quiz" button — quiz ONLY from studied topics, shows results in a modal
+  - Wrong answers in revision quiz results must have a **"Study this topic"** button that jumps to that topic's study page
+- **Weak areas tracker**: tracks every wrong answer across all quizzes, shows weakest topics with accuracy bars, study/retry/details buttons
+- "Quiz Weak Areas Only" and "Clear History" buttons
+
+### Test Prep Features:
+- Three modes: Quick (20 questions, 20 min), Standard (35, 30 min), Full (all, no timer)
+- Question number map at top showing progress (green=correct, red=wrong, grey=unanswered)
+- **Restart button** in the header area (NOT near Previous/Next to avoid accidental clicks)
+- **Finish screen**: if unanswered questions exist, show a review screen with skipped questions pulsing red — user can jump back to them or submit anyway
+- Only saves to history if ALL questions are answered
+- **Test history**: visual bar chart of all past attempts, stats (best score, total attempts, passes, trend), timeline list with scores and dates. Persists in localStorage.
+- Results show score by topic with bars + review of wrong answers
 
 ## Module Content
 
@@ -102,8 +126,31 @@ Build a single, self-contained `study_hub_itpfa.html` file (no internet needed, 
 6. **Quiz questions** should test application, not just definitions — "What should you do when..." scenarios
 7. **Flashcards** should include scenario-based cards, not just definitions
 
+### Study Page Features:
+- Three explanation tabs: Textbook, Lecturer, Real Life
+- **Comparison tables** below the explanation tabs (rendered from a getComparisonTable function)
+- Key Facts to Memorize (bullet list)
+- **Visual Resources** section: YouTube search links + Google Image search links for each topic
+- "Mark as Studied" button synced with dashboard progress
+- Inline CSS/SVG diagrams where applicable
+
+### Flashcard Features:
+- Flip animation (click or spacebar)
+- Arrow keys to navigate
+- Filter by category
+- Shuffle button
+- Category filter bar
+
+### Quiz Features:
+- Answer options shuffled every time (use a shuffleOpts function)
+- Show explanation after answering
+- Score counter
+- "All Topics" and "Random 10" filter
+- Restart button
+
 ## After Building
 
 - Save as `study_hub_itpfa.html`
-- Create `HOW_TO_USE.txt` (detailed) and `HOW_TO_USE_WhatsApp.txt` (emoji version) — same format as my ITCNA1-12 guides
+- Create `HOW_TO_USE.txt` (detailed version) and `HOW_TO_USE_WhatsApp.txt` (emoji WhatsApp-friendly version)
 - I will provide lecture transcripts/notes to fill in gaps and add the lecturer's specific explanations
+- The file must be fully self-contained — shareable as a single HTML file, works offline, no dependencies

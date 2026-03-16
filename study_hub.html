@@ -1343,11 +1343,15 @@ function renderRevQuizModal(){
       </div>
       ${d.questions.map((q,i)=>{
         const wasCorrect=d.answers[i]===q.ans;
-        return wasCorrect?'':`<div class="tp-review-item">
+        if(wasCorrect) return '';
+        const matchTopic=topics.find(t=>q.topic.toLowerCase().includes(t.tag)||t.title.toLowerCase().includes(q.topic.toLowerCase()))||topics.find(t=>t.keyFacts.some(f=>f.toLowerCase().includes(q.opts[q.ans].toLowerCase().slice(0,20))));
+        const studyBtn=matchTopic?'<button onclick="closeRevModal();showPage(\'study\');openTopic('+matchTopic.id+')" style="margin-top:.5rem;padding:5px 12px;border-radius:6px;border:1px solid rgba(108,99,255,.3);background:rgba(108,99,255,.1);color:var(--accent);cursor:pointer;font-size:11px;font-weight:600">📖 Study this topic</button>':'';
+        return `<div class="tp-review-item">
           <div class="tp-q-text">${q.q}</div>
           <div class="tp-your-ans">Your answer: ${d.answers[i]!==undefined?q.opts[d.answers[i]]:'Not answered'}</div>
           <div class="tp-correct-ans">Correct: ${q.opts[q.ans]}</div>
           <div style="margin-top:.5rem;font-size:12px;color:var(--text2)">${q.explain}</div>
+          ${studyBtn}
         </div>`;
       }).join('')}
       <div style="display:flex;gap:.5rem;justify-content:center;margin-top:1rem">
@@ -2303,6 +2307,73 @@ function toggleJourneyLayer(idx){
   el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
+function getTestHistory(){return JSON.parse(localStorage.getItem('itcna_test_history')||'[]');}
+function saveTestAttempt(score,total,pct,mode){
+  const history=getTestHistory();
+  history.push({date:new Date().toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}),score,total,pct,mode,pass:pct>=70});
+  localStorage.setItem('itcna_test_history',JSON.stringify(history));
+}
+function clearTestHistory(){localStorage.removeItem('itcna_test_history');renderTestPrep();}
+
+function renderTestHistory(){
+  const history=getTestHistory();
+  if(!history.length) return '';
+  const best=Math.max(...history.map(h=>h.pct));
+  const latest=history[history.length-1].pct;
+  const streak=history.filter(h=>h.pass).length;
+  const trend=history.length>=2?latest-history[history.length-2].pct:0;
+
+  let html=`<div class="card" style="margin-bottom:1.5rem;border:1px solid rgba(108,99,255,.2)">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0;color:var(--accent)">Your Test History</h3>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <div style="text-align:center;padding:6px 14px;background:rgba(67,233,123,.1);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--accent3)">${best}%</div><div style="font-size:10px;color:var(--text2)">Best</div></div>
+        <div style="text-align:center;padding:6px 14px;background:rgba(108,99,255,.1);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--accent)">${history.length}</div><div style="font-size:10px;color:var(--text2)">Attempts</div></div>
+        <div style="text-align:center;padding:6px 14px;background:rgba(67,233,123,.1);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--accent3)">${streak}</div><div style="font-size:10px;color:var(--text2)">Passes</div></div>
+        ${trend!==0?`<div style="text-align:center;padding:6px 14px;background:${trend>0?'rgba(67,233,123,.1)':'rgba(255,101,132,.1)'};border-radius:8px"><div style="font-size:20px;font-weight:700;color:${trend>0?'var(--accent3)':'var(--accent2)'}">${trend>0?'+':''}${trend}%</div><div style="font-size:10px;color:var(--text2)">Trend</div></div>`:''}
+      </div>
+    </div>`;
+
+  // Visual timeline
+  html+=`<div style="display:flex;align-items:end;gap:6px;height:120px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:.75rem;overflow-x:auto">`;
+  const maxBars=Math.min(history.length, 20);
+  const recentHistory=history.slice(-maxBars);
+  recentHistory.forEach((h,i)=>{
+    const barH=Math.max(h.pct, 8);
+    const color=h.pct>=90?'var(--accent3)':h.pct>=70?'var(--accent4)':'var(--accent2)';
+    html+=`<div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:36px">
+      <div style="font-size:10px;font-weight:700;color:${color}">${h.pct}%</div>
+      <div style="width:28px;height:${barH}px;background:${color};border-radius:4px 4px 0 0;opacity:${0.5+0.5*(i/recentHistory.length)};transition:height .3s"></div>
+      <div style="font-size:9px;color:var(--text2)">#${history.length-maxBars+i+1}</div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  // Pass line label
+  html+=`<div style="font-size:10px;color:var(--text2);margin-bottom:.5rem">Green = 90%+ | Yellow = 70-89% (pass) | Red = below 70%</div>`;
+
+  // Recent attempts list
+  html+=`<div style="max-height:150px;overflow-y:auto">`;
+  [...history].reverse().slice(0,10).forEach((h,i)=>{
+    const num=history.length-i;
+    const icon=h.pct>=90?'🌟':h.pct>=70?'✅':'❌';
+    const color=h.pct>=90?'var(--accent3)':h.pct>=70?'var(--accent4)':'var(--accent2)';
+    html+=`<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px">
+      <span>${icon}</span>
+      <span style="font-weight:600;min-width:55px">Test ${num}</span>
+      <span style="font-weight:700;color:${color};min-width:40px">${h.pct}%</span>
+      <span style="color:var(--text2)">${h.score}/${h.total}</span>
+      <span style="color:var(--text2);font-size:11px">${h.mode}</span>
+      <span style="color:var(--text2);font-size:11px;margin-left:auto">${h.date}</span>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  html+=`<button onclick="clearTestHistory()" style="margin-top:.75rem;padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--text2);cursor:pointer;font-size:11px">Clear History</button>`;
+  html+=`</div>`;
+  return html;
+}
+
 function renderTestPrep(){
   if(!tpStarted){
     document.getElementById('tpContent').innerHTML=`
@@ -2310,6 +2381,7 @@ function renderTestPrep(){
         <h2>Test Prep — Exam Simulator</h2>
         <p>Simulate your real test environment. Timed. No going back. See your results at the end.</p>
       </div>
+      ${renderTestHistory()}
       <div class="card">
         <h3>Choose Your Test Mode</h3>
         <p class="subtitle" style="margin-bottom:1rem">All questions come from your 19 test topics with explanations after each answer</p>
@@ -2339,6 +2411,7 @@ function renderTestPrep(){
       <div><strong>Question ${tpIdx+1}</strong> of ${tpQuestions.length}</div>
       <div class="tp-timer" id="tpTimerDisplay">${tpSeconds>0?formatTime(tpSeconds):'No Timer'}</div>
       <div>Answered: ${tpAnswers.filter(a=>a!==undefined).length}/${tpQuestions.length}</div>
+      <button onclick="resetTP()" style="padding:6px 14px;border-radius:8px;border:1px solid rgba(255,101,132,.3);background:rgba(255,101,132,.1);color:var(--accent2);cursor:pointer;font-size:12px;font-weight:600">✕ Restart</button>
     </div>
     <div class="tp-map">${tpQuestions.map((_,i)=>{
       let cls='unanswered';
@@ -2360,10 +2433,9 @@ function renderTestPrep(){
       }).join('')}</div>
       <div class="quiz-explain ${answered?'show':''}">${q.explain}</div>
     </div>
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="fc-btn prev" onclick="tpNav(-1)" ${tpIdx===0?'disabled':''}>← Previous</button>
       <button class="fc-btn next" onclick="tpNav(1)">${tpIdx===tpQuestions.length-1?'Finish Test →':'Next →'}</button>
-      <button class="fc-btn shuffle" onclick="resetTP()" style="margin-left:auto;background:rgba(255,101,132,.15);color:var(--accent2)">Restart Test</button>
     </div>`;
 }
 
@@ -2404,7 +2476,29 @@ function tpAnswer(idx,btn){
 function tpNav(d){
   const nxt=tpIdx+d;
   if(nxt>=0&&nxt<tpQuestions.length){tpIdx=nxt;renderTestPrep();}
-  else if(nxt>=tpQuestions.length){showTPResults();}
+  else if(nxt>=tpQuestions.length){tpTryFinish();}
+}
+
+function tpTryFinish(){
+  const unanswered=tpAnswers.map((a,i)=>a===undefined?i:-1).filter(i=>i!==-1);
+  if(unanswered.length===0){showTPResults();return;}
+  // Show review screen with unanswered highlighted
+  document.getElementById('tpContent').innerHTML=`
+    <div class="card" style="text-align:center;padding:2rem;border:2px solid var(--accent4)">
+      <div style="font-size:36px;margin-bottom:.5rem">⚠️</div>
+      <h2 style="color:var(--accent4);margin-bottom:.5rem">You have ${unanswered.length} unanswered question${unanswered.length>1?'s':''}</h2>
+      <p class="subtitle" style="margin-bottom:1.5rem">Go back and answer them before submitting. Click any red number to jump to it.</p>
+      <div class="tp-map" style="justify-content:center;margin-bottom:1.5rem">${tpQuestions.map((_,i)=>{
+        let cls='unanswered';
+        if(tpAnswers[i]!==undefined) cls=tpAnswers[i]===tpQuestions[i].ans?'answered':'wrong-ans';
+        else cls='unanswered';
+        return '<span class="tp-q-num '+cls+'" onclick="tpGoTo('+i+')" style="'+(tpAnswers[i]===undefined?'background:var(--accent2);color:#fff;animation:arrowPulse 1s ease infinite;':'')+'cursor:pointer">'+(i+1)+'</span>';
+      }).join('')}</div>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <button class="tp-start-btn secondary" onclick="tpGoTo(${unanswered[0]})">Go to Question ${unanswered[0]+1}</button>
+        <button class="tp-start-btn" onclick="showTPResults()" style="background:rgba(255,255,255,.1);font-size:14px;padding:10px 20px">Submit Anyway (${tpAnswers.filter(a=>a!==undefined).length}/${tpQuestions.length} answered)</button>
+      </div>
+    </div>`;
 }
 
 function tpGoTo(i){tpIdx=i;renderTestPrep();}
@@ -2422,6 +2516,9 @@ function showTPResults(){
   const answeredCount=tpAnswers.filter(a=>a!==undefined).length;
   const correct=tpAnswers.filter((a,i)=>a===tpQuestions[i].ans).length;
   const pct=answeredCount>0?Math.round(correct/total*100):0;
+  // Save attempt to history — only if you answered all questions
+  const mode=total<=20?'Quick (20)':total<=35?'Standard (35)':'Full ('+total+')';
+  if(answeredCount===total) saveTestAttempt(correct,total,pct,mode);
   const pass=pct>=70;
   // Topic breakdown
   const topicMap={};
